@@ -4,7 +4,7 @@ import { LayoutComponent } from './layout.component';
 
 // Pantallas
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SocioComponent } from './socio/socio.component';
+import { CrearEncuestaComponent } from './crear-encuesta/crear-encuesta.component';
 import { AuthGuard } from '../guard/auth.guard';
 import { EncuestasComponent } from './encuestas/encuestas.component';
 
@@ -15,7 +15,7 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'Home'},
             { path: 'dashboard', component: DashboardComponent },
-            { path: 'crear-encuesta', component: SocioComponent },
+            { path: 'crear-encuesta', component: CrearEncuestaComponent },
             { path: 'encuestas', component: EncuestasComponent },
 
         ]

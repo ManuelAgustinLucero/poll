@@ -6,7 +6,7 @@ import { LayoutRoutingModule } from './layout-routing.module';
 
 import { LayoutComponent } from './layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SocioComponent } from './socio/socio.component';
+import { CrearEncuestaComponent } from './crear-encuesta/crear-encuesta.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import {WebcamModule} from 'ngx-webcam';
@@ -30,7 +30,7 @@ import { FirebaseService } from '../services/firebase.service';
     declarations: [
         LayoutComponent,
         DashboardComponent,
-        SocioComponent,
+        CrearEncuestaComponent,
         EncuestasComponent,
         
     ],

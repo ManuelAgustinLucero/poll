@@ -20,6 +20,7 @@ export class LayoutComponent {
     }
 
     ngOnInit() {
+        this.logo = sessionStorage.getItem('photoURL') !== 'null' ? sessionStorage.getItem('photoURL') : "assets/img/brand/default-user-male.png";
     }
 
 

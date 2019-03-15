@@ -4,17 +4,18 @@ import { Radio } from '../../models/radio.class';
 import { Question } from '../../models/question.class';
 import { FirebaseService } from '../../services/firebase.service';
 import { AuthService } from '../../access/core/auth.service';
+import { Router } from '@angular/router';
 
 declare const $: any;
 
 @Component({
   selector: 'app-socio',
-  templateUrl: './socio.component.html',
-  styleUrls: ['./socio.component.css'],
+  templateUrl: './crear-encuesta.component.html',
+  styleUrls: ['./crear-encuesta.component.css'],
   providers: [SociosService,AuthService]
 
 })
-export class SocioComponent implements OnInit {
+export class CrearEncuestaComponent implements OnInit {
 
   dropdownList = [];
   selectedItems = [];
@@ -51,7 +52,9 @@ export class SocioComponent implements OnInit {
     }]
 
   constructor(
-    public _FirebaseService: AuthService
+    public _FirebaseService: AuthService,
+    private router: Router,
+
   ) { }
 
   ngOnInit() {
@@ -117,6 +120,7 @@ export class SocioComponent implements OnInit {
   onSubitFirebase(){
     this._FirebaseService.postEncuesta({encuesta:this.send})
     .subscribe(res => {
+      this.router.navigate(['layout/encuestas']);
         console.log(res);
       }, (err) => {
         console.log(err);

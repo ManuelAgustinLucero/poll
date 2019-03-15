@@ -44,7 +44,8 @@ export class LoginComponent  {
   tryGoogleLogin(){
     this.authService.doGoogleLogin()
     .then(res => {
-      this.router.navigate(['/user']);
+      this.getUser();
+      //this.router.navigate(['layout/dashboard']);
     })
   }
 
@@ -63,6 +64,7 @@ export class LoginComponent  {
     this.userService.getCurrentUser()
     .then(res => {
       sessionStorage.setItem("token", res.uid);
+      sessionStorage.setItem("photoURL", res.photoURL);
       this.router.navigate(['layout/dashboard']);
 
     }, err => {
