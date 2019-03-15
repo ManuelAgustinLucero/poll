@@ -1,0 +1,50 @@
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0 text-center">Encuestas</h3>
+          <hr>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col"> Encuesta</th>
+                <th scope="col"> Inglesar</th>
+                <th scope="col"> Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let poll of data; let i = index">
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <div class="media-body text-truncate">
+                      <h4 class="mb-0 text-capitalize">{{poll?.key}} </h4>
+                    </div>
+                  </div>
+                </th>
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <div class="media-body text-truncate">
+                      <a target="_blank" [routerLink]="['/encuesta/'+poll?.key]"  class="btn btn-outline-primary" >Ingresar</a>
+                    </div>
+                  </div>
+                </th>
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <div class="media-body text-truncate">
+                        <button type="button" class="btn btn-outline-danger" (click)="deleteBoard(poll?.key)" >Eliminar</button>
+                    </div>
+                  </div>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

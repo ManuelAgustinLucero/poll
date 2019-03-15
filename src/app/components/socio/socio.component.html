@@ -1,0 +1,415 @@
+<div class="main-content">
+  <!-- Top navbar -->
+
+  <!-- Header -->
+
+  <!-- Page content -->
+  <div class="container-fluid mt--7">
+    <div class="row">
+      <div class="col-xl-12 order-xl-1">
+        <div class="card bg-secondary shadow">
+          <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+              <div class="col-12">
+                <h3 class="mb-0">Crear encuesta</h3>
+                <div class="col-lg-12 text-lg-right align-self-lg-center">
+                    <button (click)="onSubitFirebase()" class="btn btn btn-warning pull-right">
+                        Finalizar
+                     </button>
+                </div>
+              
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h6 class="heading-small text-muted mb-4">Tipo</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <ng-multiselect-dropdown required [data]="dropdownList" [settings]="dropdownSettings" name="type"
+                      (onSelect)="onItemSelect($event)">
+                    </ng-multiselect-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Radio -->
+            <div class="FormRadio" *ngIf="question.type === 'Radio'">
+              <form (ngSubmit)="onSubmitRadio()">
+                <h6 class="heading-small text-muted mb-4">Agregar opcion</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="input-group mb-4">
+                          <input class="form-control" placeholder="Question" type="text" name="questionLabel"
+                            [(ngModel)]="question.questionLabel" #questionLabel="ngModel" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <form (ngSubmit)="onSubmitRadioOption()" #radioForm="ngForm">
+                    <div class="row">
+                      <div class="col-md-4 offset-1">
+                        <div class="form-group">
+                          <div class="input-group mb-4">
+                            <input class="form-control" placeholder="Value" type="text" [(ngModel)]="radio.value"
+                              name="value" #value="ngModel" maxlength="18" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <div class="input-group mb-4">
+                            <input class="form-control" placeholder="label" type="text" [(ngModel)]="radio.label"
+                              name="label" #label="ngModel" maxlength="18" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <button class="btn btn-icon btn-round btn-2 btn-success" type="submit"
+                          [disabled]="!radioForm.form.valid">
+                          <span class="btn-inner--icon"> <i class="ni ni-fat-add"></i></span>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <hr class="my-4" />
+                <h6 class="heading-small text-muted mb-4">Lista</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <div *ngFor="let radio of radios; let i = index">
+                          <div class="custom-control custom-radio mb-3">
+                            <input name="custom-radio-2" class="custom-control-input" id="{{i}}" type="radio">
+                            <label class="custom-control-label" for="{{i}}">{{radio.label}}</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4" />
+                <div class="text-center">
+                  <button class="btn btn-icon btn-3 btn-success" type="submit">
+                    <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span> <span
+                      class="btn-inner--text">Agregar otra opcion</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <!-- Imagen -->
+            <div class="FormRadio" *ngIf="question.type === 'Imagen'">
+              <form (ngSubmit)="onSubmitImage()">
+                <h6 class="heading-small text-muted mb-4">Agregar opcion</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="input-group mb-4">
+                          <input class="form-control" placeholder="Question" type="text" name="questionLabel"
+                            [(ngModel)]="question.questionLabel" #questionLabel="ngModel" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4" />
+                <h6 class="heading-small text-muted mb-4">Lista</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div *ngFor="let inputs of InputsImage; let i = index"
+                            class="col-md-3  text-center img-box  bg-gray  ">
+                            <label class="image-checkbox">
+                              <img class="img-responsive " src="{{inputs.img}}" />
+                              <i [ngClass]="{'fa fa-check hidden': choseImage === x }" class=""></i>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4" />
+                <div class="text-center">
+                  <button class="btn btn-icon btn-3 btn-success" type="submit">
+                    <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span> <span
+                      class="btn-inner--text">Agregar otra opcion</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <!-- Texto -->
+            <div class="FormTexto" *ngIf="question.type === 'Texto'">
+              <form (ngSubmit)="onSubmitTexto()">
+                <h6 class="heading-small text-muted mb-4">Agregar opcion</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="input-group mb-4">
+                          <input class="form-control" placeholder="Question" type="text" name="questionLabel"
+                            [(ngModel)]="question.questionLabel" #questionLabel="ngModel" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <h6 class="heading-small text-muted mb-4">Ejemplo</h6>
+                <div class="pl-lg-4 ">
+                  <div class="form-group">
+                    <label>Ejemplo</label>
+                    <textarea rows="4" class="form-control form-control-alternative" placeholder="Ejemplo"
+                      disabled> </textarea>
+                  </div>
+                </div>
+                <hr class="my-4" />
+                <div class="text-center">
+                  <button class="btn btn-icon btn-3 btn-success" type="submit">
+                    <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span> <span
+                      class="btn-inner--text">Agregar otra opcion</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <!-- Rango -->
+            <div class="FormRango" *ngIf="question.type === 'Rango'">
+              <form (ngSubmit)="onSubmitRango()">
+                <h6 class="heading-small text-muted mb-4">Agregar opcion</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="input-group mb-4">
+                          <input class="form-control" placeholder="Question" type="text" name="questionLabel"
+                            [(ngModel)]="question.questionLabel" #questionLabel="ngModel" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="">Probabilidad</label>
+                        <div class="input-group mb-4">
+                          <input class="form-control" placeholder="Ej: NADA PROBABLE" type="text" name="firstText"
+                            [(ngModel)]="question.firstText" #firstText="ngModel" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="">Probabilidad</label>
+                        <div class="input-group mb-4">
+                          <input class="form-control" placeholder="Ej: MUY PROBABLE" type="text" name="secondText"
+                            [(ngModel)]="question.secondText" #secondText="ngModel" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4" />
+                <h6 class="heading-small text-muted mb-4">Ejemplo</h6>
+                <div class="pl-lg-6 offset-2">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th colspan="2" class="text-scale">{{question.firstText}}</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th colspan="2" class="text-scale text-right">{{question.secondText}}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td *ngFor='let in of [1,2,3,4,5,6,7,8,9,10];let i = index'
+                              (click)="choiseOption(option.question,i)" (click)="(backgroundTd=i)"
+                              [ngClass]="{'background-td': backgroundTd === i}">
+                              {{i+1}} </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4" />
+                <div class="text-center">
+                  <button class="btn btn-icon btn-3 btn-success" type="submit">
+                    <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span> <span
+                      class="btn-inner--text">Agregar otra opcion</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br><br><br><br>
+<div class="main-content">
+  <div class="container-fluid mt--7">
+    <div class="row">
+      <div class="col-xl-12 order-xl-1">
+        <div class="card bg-secondary shadow">
+          <div class="card-header bg-success border-0">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h3 class="mb-0 text-white">Preview</h3>
+              </div>
+            </div>
+          </div>
+          <div class="card-body container">
+            <div *ngFor="let option of send; let i = index">
+              <div *ngIf="option.type == 'Imagen'" class="checkbox-images">
+                <div class="text-step">
+                  <span class="text-question">{{i+1}}. {{option.question}}</span>
+                </div>
+                <div class="row">
+                  <div *ngFor="let inputs of option?.questionsInputs; let x = index"
+                    class="col-md-3  text-center img-box  bg-gray  ">
+                    <label class="image-checkbox">
+                      <img class="img-responsive " src="{{inputs.img}}" />
+                      <i [ngClass]="{'fa fa-check hidden': choseImage === x }" class=""></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="option.type == 'Radio'" class="question-circle">
+                <div class="text-step">
+                  <span class="text-question">{{i+1}}. {{option.question}}</span>
+                </div>
+                <div class="check-box-round">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <div *ngFor="let inputs of option?.questionsInputs; let x = index">
+                        <div class="custom-control custom-radio mb-3">
+                          <input name="custom-radio-2" class="custom-control-input" id="x+{{option.question}}"
+                            type="radio">
+                          <label class="custom-control-label" for="x+{{option.question}}">{{inputs.label}}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="option.type == 'Rango'" class="scale-checkbox">
+                <div class="text-step">
+                  <span class="text-question">{{i+1}}. {{option.question}}</span>
+                </div>
+                <a href="#a">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th colspan="2" class="text-scale">{{option.firstText}}</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th colspan="2" class="text-scale text-right">{{option.secondText}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td *ngFor='let in of [1,2,3,4,5,6,7,8,9,11];let i = index'
+                          (click)="choiseOption(option.question,i)" (click)="(backgroundTd=i)"
+                          [ngClass]="{'background-td': backgroundTd === i}">
+                          {{i}} </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </a>
+              </div>
+
+              <div *ngIf="option.type == 'Texto'" class="question-circle">
+                <div class="text-step">
+                  <span class="text-question">{{i+1}}. {{option.question}}</span>
+                </div>
+                <div class="pl-lg-4">
+                  <div class="form-group">
+                    <label>Ejemplo</label>
+                    <textarea rows="4" class="form-control form-control-alternative" placeholder="Ejemplo"> </textarea>
+                  </div>
+                </div>
+              </div>
+              <hr class="sparete">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

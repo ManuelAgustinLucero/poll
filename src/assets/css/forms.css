@@ -1,0 +1,19 @@
+input .ng-valid[required], .ng-valid.required   {
+    border-left: 5px solid #42A948; /* green */
+  }
+  
+  input .ng-invalid:not(form)   {
+    border-left: 5px solid #a94442; /* red */
+  }
+
+
+  :disabled{
+    cursor: not-allowed;
+  }
+
+  input.form-control.text-primary {
+    width: 208px !important;
+}
+
+
+.pointer {cursor: pointer;}
